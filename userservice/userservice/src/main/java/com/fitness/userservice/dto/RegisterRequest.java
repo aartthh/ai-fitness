@@ -12,9 +12,12 @@ public class RegisterRequest {
     @Email(message = "Invalid email format")
     private String email;
 
+
+
     @NotBlank(message = "Password is Required")
     @Size(min = 6 , message = "Password must be at least of 6 characters")
     private String password;
     private String firstName;
+    private String keycloakId;
     private String lastName;
 }

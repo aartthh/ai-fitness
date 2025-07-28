@@ -15,6 +15,7 @@ public class RecommendationController {
 
     private final RecommendationService recommendationService;
 
+
     // ✅ Get recommendations for a specific user
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Recommendation>> getUserRecommendation(@PathVariable String userId) {
@@ -22,10 +23,14 @@ public class RecommendationController {
         return ResponseEntity.ok(recommendations);
     }
 
-    // ✅ Get recommendation for a specific activity
     @GetMapping("/activity/{activityId}")
     public ResponseEntity<Recommendation> getActivityRecommendation(@PathVariable String activityId) {
-        Recommendation recommendation = recommendationService.getActivityRecommendation(activityId);
-        return ResponseEntity.ok(recommendation);
+        try {
+            Recommendation recommendation = recommendationService.getActivityRecommendation(activityId);
+            return ResponseEntity.ok(recommendation);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build(); // Returns 404 instead of 500
+        }
     }
+
 }
